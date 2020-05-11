@@ -52,12 +52,12 @@ public class App
         System.out.println(buckets.size());
          
         //upload file
-        //myS3manager.uploadFile(MY_PRIV_BUCKET_NAME, F1, DIR, F1);
+        myS3manager.uploadFile(MY_PRIV_BUCKET_NAME, F1, DIR, F1);
         
         //download file
-//        myS3manager.downloadFile(MY_PRIV_BUCKET_NAME, F1, DIR_ALT);
+        myS3manager.downloadFile(MY_PRIV_BUCKET_NAME, F1, DIR_ALT);
         
         // delete file form s3
-//        myS3manager.deleteFile(MY_PRIV_BUCKET_NAME, F1);
+        myS3manager.deleteFile(MY_PRIV_BUCKET_NAME, F1);
     }
 }
