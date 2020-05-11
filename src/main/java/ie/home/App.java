@@ -2,20 +2,15 @@ package ie.home;
 
 import java.util.List;
 
-import com.amazonaws.auth.AWSSessionCredentials;
-import com.amazonaws.auth.BasicSessionCredentials;
-import com.amazonaws.services.s3.model.Bucket;
-
 /**
  * Hello world!
  *
  */
 public class App 
 {
-	private static final String AWS_ACCESS_KEY = "AWS_ACCESS_KEY_ID";
-	private static final String AWS_SECRET_KEY = "AWS_SECRET_ACCESS_KEY";
+
 	private static final String MY_PRIV_BUCKET_NAME = "morcov-bucket";
-	private static final String MY_ANOTHER_BUCKET_NAME = "temp-morcov-bucket";
+	private static final String MY_ANOTHER_BUCKET_NAME = "buck2morcov";
 	private static final String F1 = "file11.txt";
 	private static final String F2 = "file22.txt";
 	private static final String F3 = "file33.txt";
@@ -24,13 +19,9 @@ public class App
 	
     public static void main( String[] args )
     {
-    	String accessKey = System.getenv("AWS_ACCESS_KEY");
-    	String secretKey = System.getenv("AWS_SECRET_KEY");
-    	
-    	AWSSessionCredentials credentials = new BasicSessionCredentials(accessKey, secretKey, "");
 
     	/*
-    	 * This is created in the MyS3Client. 
+    	 * This now is created in the MyS3Client. 
     	 * 
     	 *AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
     			.withCredentials(new AWSStaticCredentialsProvider(credentials))
@@ -46,10 +37,13 @@ public class App
     	 */
     	
 //    	MyS3Client myS3Client = new MyS3Client(s3Client);
-    	S3Manager myS3manager = new S3Manager(credentials);
-
+    	S3Manager myS3manager = new S3Manager();
+    	/*
     	List<Bucket> buckets = myS3manager.listBuckets();
-        System.out.println(buckets.size());
+
+    	buckets.forEach(file -> {
+    		System.out.println(file);
+    	});
          
         //upload file
         myS3manager.uploadFile(MY_PRIV_BUCKET_NAME, F1, DIR, F1);
@@ -59,5 +53,23 @@ public class App
         
         // delete file form s3
         myS3manager.deleteFile(MY_PRIV_BUCKET_NAME, F1);
+        */
+    	
+        List<String> files = myS3manager.listFiles(MY_PRIV_BUCKET_NAME);
+        files.stream()
+        	.forEach(fileName -> {
+        		System.out.println(fileName);
+        	});
+      
+        /*
+        myS3manager.copyFile(MY_PRIV_BUCKET_NAME, F1, MY_ANOTHER_BUCKET_NAME);
+        
+        // before running this method, make sure the bucket is public. so that you can see the result
+        myS3manager.blockPublicAccess(MY_ANOTHER_BUCKET_NAME);
+        
+        // generate a url to read the file. test in incognito to read the file using temp url
+        String presignedUrl = myS3manager.createPresignedUrl(MY_PRIV_BUCKET_NAME, F1);
+        System.out.println(presignedUrl);
+        */
     }
 }
