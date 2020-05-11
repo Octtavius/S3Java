@@ -16,6 +16,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
+import com.amazonaws.services.s3.model.DeleteBucketRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -125,6 +126,11 @@ public class S3Manager {
 		.withExpiration(expiration);
 		
 		return s3Client.generatePresignedUrl(request).toString();
+	}
+
+	public void deleteBucket(String bucketName) {
+		DeleteBucketRequest request = new DeleteBucketRequest(bucketName);
+		s3Client.deleteBucket(request);
 	}
 	
 	

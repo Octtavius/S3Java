@@ -70,6 +70,9 @@ public class App
         // generate a url to read the file. test in incognito to read the file using temp url
         String presignedUrl = myS3manager.createPresignedUrl(MY_PRIV_BUCKET_NAME, F1);
         System.out.println(presignedUrl);
+
+        myS3manager.deleteBucket(MY_ANOTHER_BUCKET_NAME);
         */
+        
     }
 }
